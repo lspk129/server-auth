@@ -1,36 +1,36 @@
-# GraphQL-Express
-An simple Express Server implemented using GraphQL and Apollo.
-This repo is attached to a series of articles with detailed explanations of the implementations:
+### Server authentication with JWT
 
-Part 1: [Implementing GraphQL using APollo on an Express Server](https://scotch.io/tutorials/implementing-graphql-using-apollo-on-an-express-server) - Use the `master` branch.
+Packages included:
+* Apollo server
+* GraphQL
+* Express
+* Mongoose
+* Passport
 
-Part 2: [Creating GraphQL Subscriptions in Express](https://scotch.io/bar-talk/creating-graphql-subscriptions-in-express) - Use the `subscriptions` branch.
+#### Instalation
+----------
 
-The repo is also linked to another [GraphQL-React-Apollo](https://github.com/kimobrian/GraphQL-React-Apollo) with front end implementations ing React using Apollo with corresponding articles.
-## Setup and Installation.
-
-> Note: Configure the port on the client code to match the CORs origin on this [line](https://github.com/kimobrian/GraphQL-Express/blob/f0ba47db3ae95c5b5f586f2870fa3e2c7cdb61cf/server.js#L13).
-
-```sh
-git clone git@github.com:kimobrian/GraphQL-Express.git  #for SSH
-
-git clone https://github.com/kimobrian/GraphQL-Express.git #for HTTPS
-
-cd GraphQL-Express
-
-npm i #Alternatively yarn
-
-npm start #Alternatively yarn start
-
+Instal dependencies
+```javascript
+yarn
 ```
 
-For any issues with nodemon, install it globally.
-
-```sh
-npm install nodemon -g # Alternatively yarn global add nodemon
+Start local server with `nodemon`
 
 ```
+yarn start
+```
 
-Navigate to [localhost](http://localhost:7700/graphiql) to experiment with different queries.
+Run GraphiQL
+```
+http://localhost:3090/graphiql
+```
 
-You can explore [npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) to avoid global installation of modules.
+#### Authorization
+-----------
+
+1. App is using MongoDB so make sure `mongod` is running in your terminal
+2. Use Postman and GET request to root `/` route of your server. Expected responce should be `unauthorized`, because root route is protected.
+3. * Crate new user by making POST request to `/signup` endpoint with body `{"email": "user@email.com", "password": "examplePassword"}`. Expected responce of successfully singed up user is JWT token, copy it.
+	* If user was created before, make POST request to `/singin` endpoint with body of email and password. Expected respnse of successfuly provided email and password should be JWT, copy it.
+4. Make GET request to root `/` endpoint providing HEADERS with authorization key and JWT token as a value, and you should get 'Hola!' message if correct token was provided.

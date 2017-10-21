@@ -5,21 +5,32 @@ import {
   graphiqlExpress,
 } from 'graphql-server-express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import morgan from 'morgan';
 
+import router from './src/router';
 import { schema } from './src/schema';
+import { channels } from './src/resolvers';
 
-const PORT = 7700;
-const server = express();
-server.use('*', cors({ origin: 'http://localhost:7800' }));
+const app = express();
 
-server.use('/graphql', bodyParser.json(), graphqlExpress({
+// setup DB
+mongoose.connect('mongodb://localhost:auth/auth');
+
+// setup App
+app.use(morgan('combined'));
+app.use(cors());
+app.use(bodyParser.json({ type: '*/*' }));
+app.use('/graphql', bodyParser.json(), graphqlExpress({
   schema
 }));
-
-server.use('/graphiql', graphiqlExpress({
+app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql'
 }));
+router(app);
 
-server.listen(PORT, () =>
-  console.log(`GraphQL Server is now running on http://localhost:${PORT}`)
+// setup server
+const port = process.env.PORT || 3090;
+app.listen(port, () =>
+  console.log(`GraphQL Server is now running on http://localhost:${port}`)
 );
