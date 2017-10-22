@@ -12,7 +12,10 @@ const app = express();
 
 // setup DB
 const mongoDB = process.env.MLAB_URI;
+mongoose.Promise = global.Promise
 mongoose.connect(mongoDB);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 // setup App
 // morgan is HTTP request logger middleware
