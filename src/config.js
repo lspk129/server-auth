@@ -1,4 +1,5 @@
 // hold secret config
 export default {
-  secret: 'verySecretToken',
+  PORT: 3090,
+  SECRET: 'verySecretMessage',
 }

@@ -2,9 +2,11 @@ import jwt from 'jwt-simple';
 import User from './user';
 import config from './config';
 
+const { SECRET } = config;
+
 const tokenForUser = (user)  => {
   const timestamp = new Date().getTime();
-  return jwt.encode({ sub: user.id, iat: timestamp }, config.secret);
+  return jwt.encode({ sub: user.id, iat: timestamp }, SECRET);
 }
 
 export const signin = (req, res, next) => {
@@ -39,7 +41,7 @@ export const signup = (req, res, next) => {
     user.save(function(err) {
       if (err) { return next(err); }
 
-      // Repond to request indicating the user was created
+      // Respond to request indicating the user was created
       res.json({ token: tokenForUser(user) });
     });
   });
