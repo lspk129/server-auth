@@ -1,11 +1,21 @@
 import express from 'express';
+import {
+  graphqlExpress,
+  graphiqlExpress,
+} from 'graphql-server-express';
 import bodyParser from 'body-parser';
-import { graphqlExpress } from 'apollo-server-express';
 
-const PORT = 3000;
-var app = express();
+const PORT = 4000;
+const server = express();
 
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: myGraphQLSchema }));
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+server.use('/graphql', bodyParser.json(), graphqlExpress({
+  schema
+}));
 
-app.listen(PORT);
+server.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql'
+}));
+
+server.listen(PORT, () => 
+  console.log(`GraphQL Server is now running on http://localhost:${PORT}`)
+);
