@@ -11,11 +11,12 @@ const { PORT } = config;
 const app = express();
 
 // setup DB
-mongoose.connect('mongodb://localhost:auth/auth');
+const mongoDB = process.env.MLAB_URI;
+mongoose.connect(mongoDB);
 
 // setup App
 // morgan is HTTP request logger middleware
-app.use(morgan('combined'));
+app.use(morgan('tiny'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
