@@ -1,8 +1,6 @@
 ### Server authentication with JWT
 
 Packages included:
-* Apollo server
-* GraphQL
 * Express
 * Mongoose
 * Passport
@@ -21,16 +19,10 @@ Start local server with `nodemon`
 yarn start
 ```
 
-Run GraphiQL
-```
-http://localhost:3090/graphiql
-```
-
 #### Authorization
 -----------
 
-1. App is using MongoDB so make sure `mongod` is running in your terminal
-2. Use Postman and GET request to root `/` route of your server. Expected response should be `unauthorized`, because root route is protected.
-3. * Create new user by making POST request to `/signup` endpoint with body `{"email": "user@email.com", "password": "examplePassword"}`. Expected response of successfully singed up user is JWT token, copy it.
-	* If user was created before, make POST request to `/singin` endpoint with body of email and password. Expected respnse of successfuly provided email and password should be JWT, copy it.
-4. Make GET request to root `/` endpoint providing HEADERS with authorization key and JWT token as a value, and you should get 'Hola!' message if correct token was provided.
+1. Use Postman and GET request to root `localhost:3090` route of your server. Expected response should be `unauthorized`, because root route is protected.
+2. * Create new user by making POST request to `localhost:3090/signup` endpoint with body `{"email": "user@email.com", "password": "examplePassword"}`. Expected response of successfully singed up user is JWT token, copy it.
+	* If user was created before, make POST request to `localhost:3090/singin` endpoint with body of email and password. Expected respnse of successfuly provided email and password should be JWT, copy it.
+3. Make GET request to root `localhost:3090` endpoint providing HEADERS with authorization key and JWT token as a value, and you should get 'Hola!' message if correct token was provided.
